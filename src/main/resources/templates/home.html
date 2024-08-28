@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+
+<h1 th:text="${message}">Something went wrong!</h1>
+
+<form action="/submit" method="post">
+    <input type="text" name="inputField" />
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>
