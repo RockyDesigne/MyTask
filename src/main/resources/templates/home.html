@@ -1,17 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
+    <title>Create and View Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            gap: 40px;
+        }
+
+        h1, h2 {
+            color: #444;
+        }
+
+        .content, .sidebar {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .content {
+            width: 60%;
+        }
+
+        .sidebar {
+            width: 30%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background-color: #f1f1f1;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        li strong {
+            font-size: 16px;
+            color: #333;
+        }
+
+        li span {
+            font-size: 14px;
+            color: #555;
+        }
+
+    </style>
 </head>
 <body>
+<div class="content">
+    <h1>Create a New Task</h1>
+    <form th:action="@{/tasks}" th:object="${task}" method="post">
+        <div>
+            <label for="taskName">Task Name:</label>
+            <input type="text" id="taskName" th:field="*{name}" placeholder="Enter task name" required />
+        </div>
+        <div>
+            <label for="taskDate">Date:</label>
+            <input type="date" id="taskDate" th:field="*{date}" required />
+        </div>
+        <div>
+            <label for="taskDescription">Description:</label>
+            <textarea id="taskDescription" th:field="*{description}" placeholder="Enter task description" required></textarea>
+        </div>
+        <div>
+            <button type="submit">Create Task</button>
+        </div>
+    </form>
+</div>
 
-<h1 th:text="${message}">Something went wrong!</h1>
-
-<form action="/submit" method="post">
-    <input type="text" name="inputField" />
-    <button type="submit">Submit</button>
-</form>
+<div class="sidebar">
+    <h2>Task List</h2>
+    <ul>
+        <li th:each="task : ${tasks}">
+            <div>
+                <strong th:text="${task.name}"></strong> <br>
+                <span th:text="${task.date}"></span> <br>
+                <span th:text="${task.description}"></span>
+            </div>
+        </li>
+    </ul>
+</div>
 
 </body>
 </html>
